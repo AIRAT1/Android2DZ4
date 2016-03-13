@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">Android2DZ4</string>
+    <string name="thread">Thread</string>
+    <string name="async">Async</string>
+    <string name="service">Service</string>
+    <string name="download">Downl.</string>
 </resources>
