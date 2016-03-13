@@ -1,17 +1,21 @@
 package de.android.android2dz4;
 
 import android.app.Activity;
+import android.app.DownloadManager;
 import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +34,8 @@ public class MainActivity extends Activity {
     private Handler handler;
     private TextView textView;
     private EditText editText;
+    private DownloadManager dm;
+    private ImageView imageView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,6 +43,7 @@ public class MainActivity extends Activity {
         btnThread = (Button)findViewById(R.id.btnThread);
         textView = (TextView)findViewById(R.id.textView);
         editText = (EditText)findViewById(R.id.editText);
+        imageView = (ImageView)findViewById(R.id.imageView);
         handler = new Handler(new Handler.Callback() {
             @Override
             public boolean handleMessage(Message msg) {
@@ -83,12 +90,19 @@ public class MainActivity extends Activity {
     }
 
     public void onClickDownload(View view) {
+        dm = (DownloadManager)getSystemService(DOWNLOAD_SERVICE);
+        DownloadManager.Request request = new DownloadManager.Request(
+                Uri.parse("http://eastbancgroup.com/images/ebtLogo.gif")
+        );
+        request.setTitle("Title");
+        request.setDescription("Description");
+        request.setMimeType("MimeType");
+        request.setDestinationInExternalFilesDir(this, Environment.DIRECTORY_DOWNLOADS, "new_file");
+        dm.enqueue(request);
+        Intent intent = new Intent();
+        intent.setAction(DownloadManager.ACTION_VIEW_DOWNLOADS);
+        startActivity(intent);
     }
-
-
-
-
-
 
     private class NetTask extends AsyncTask<String, Void, String> {
         @Override
