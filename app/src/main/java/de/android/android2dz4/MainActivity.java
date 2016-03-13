@@ -1,6 +1,7 @@
 package de.android.android2dz4;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.AsyncTask;
@@ -78,6 +79,7 @@ public class MainActivity extends Activity {
     }
 
     public void onClickService(View view) {
+        startService(new Intent(this, MyService.class));
     }
 
     public void onClickDownload(View view) {
